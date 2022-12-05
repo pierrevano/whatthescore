@@ -1,0 +1,26 @@
+{
+  "name": "whatisthescore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier --write \"**/*.*\"",
+    "start": "node index.js",
+    "surge": "surge dist whatthescore.surge.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "prettier": {
+    "printWidth": 1100
+  },
+  "author": "Pierre Vanoverschelde",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "debug": "^4.3.4",
+    "express": "^4.18.2",
+    "perf_hooks": "^0.0.1",
+    "prettier": "^2.7.1",
+    "puppeteer": "^17.1.0",
+    "surge": "^0.23.1"
+  }
+}
