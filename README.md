@@ -9,4 +9,5 @@ https://what-the-score.osc-fr1.scalingo.io/
 # Changelog
 
 ## **1.0** - 2022-12-04
+
 - first release

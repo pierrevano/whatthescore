@@ -3,6 +3,11 @@ const { performance } = require("perf_hooks");
 const express = require("express");
 const app = express();
 
+const config = {
+  hostnameDev: "http://localhost:3000",
+  hostnameProd: "https://what-the-score.osc-fr1.scalingo.io",
+};
+
 /* Importing the functions from the files. */
 const { getAllMatchsLinks } = require("./src/js/getAllMatchsLinks");
 const { getBody } = require("./src/js/getBody");
@@ -11,6 +16,7 @@ const { getLiveScore } = require("./src/js/getLiveScore");
 const { getMatchCountries } = require("./src/js/getMatchCountries");
 const { getMatchDateAndHour } = require("./src/js/getMatchDateAndHour");
 const { getScoreGrid } = require("./src/js/getScoreGrid");
+const { getIndexSearch } = require("./src/js/getIndexSearch");
 
 /**
  * It gets the values of the query parameters, gets the HTML body of the page, gets the score grid, the
@@ -29,35 +35,42 @@ const createIndex = async (req, res) => {
     const sportValue = req.query.sport;
     const tournamentValue = req.query.tournament;
     const matchValue = req.query.match;
-    const $ = await getBody(sportValue, tournamentValue, matchValue);
 
-    let scoreGrid = await getScoreGrid($);
-    console.log("scoreGrid:");
-    console.log(scoreGrid);
-    console.log("--------------------");
+    let index;
+    if (sportValue && tournamentValue && matchValue) {
+      const $ = await getBody(sportValue, tournamentValue, matchValue);
 
-    const matchCountries = await getMatchCountries($);
-    console.log("matchCountries:");
-    console.log(matchCountries);
-    console.log("--------------------");
-
-    const matchDateAndHour = await getMatchDateAndHour($);
-    console.log("matchDateAndHour:");
-    console.log(matchDateAndHour);
-    console.log("--------------------");
-
-    if (typeof scoreGrid === "undefined") {
-      const liveScore = await getLiveScore($);
-      console.log("liveScore:");
-      console.log(liveScore);
+      let scoreGrid = await getScoreGrid($);
+      console.log("scoreGrid:");
+      console.log(scoreGrid);
       console.log("--------------------");
 
-      scoreGrid = liveScore;
+      const matchCountries = await getMatchCountries($);
+      console.log("matchCountries:");
+      console.log(matchCountries);
+      console.log("--------------------");
+
+      const matchDateAndHour = await getMatchDateAndHour($);
+      console.log("matchDateAndHour:");
+      console.log(matchDateAndHour);
+      console.log("--------------------");
+
+      if (typeof scoreGrid === "undefined") {
+        const liveScore = await getLiveScore($);
+        console.log("liveScore:");
+        console.log(liveScore);
+        console.log("--------------------");
+
+        scoreGrid = liveScore;
+      }
+
+      const allMatchsLinks = await getAllMatchsLinks(dev, sportValue, tournamentValue);
+
+      index = await getIndex(allMatchsLinks, matchCountries, matchDateAndHour, scoreGrid);
+    } else {
+      index = await getIndexSearch();
     }
 
-    const allMatchsLinks = await getAllMatchsLinks(dev, sportValue, tournamentValue);
-
-    const index = await getIndex(allMatchsLinks, matchCountries, matchDateAndHour, scoreGrid);
     res.send(index);
 
     const t1 = performance.now();
@@ -74,6 +87,14 @@ app.use(express.static("src"));
 /* Creating a route for the root of the website. */
 app.get("/", (req, res) => {
   createIndex(req, res);
+});
+
+app.get("/getInput", (req, res) => {
+  const link = req.query.link;
+  const linkArray = link.split("/");
+  const hostnameProd = config.hostnameProd;
+  const URL = `${hostnameProd}?sport=${linkArray[3]}&tournament=${linkArray[4]}&match=${linkArray[5]}`;
+  res.redirect(URL);
 });
 
 /* Creating a server that listens on port 3000. */
