@@ -1,46 +1,38 @@
-body {
-  padding-top: 75px;
-}
-
-.search-container {
+.menusearch {
+  left: 50%;
   max-width: 490px;
-  display: block;
-  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 }
 
-input#search-bar {
-  margin: 0 auto;
-  width: 100%;
-  height: 45px;
-  padding: 0 20px;
-  font-size: 1rem;
-  border: 1px solid #d0cfce;
-  border-radius: 5px;
-  outline: none;
+.searchform {
+  border-radius: 99em;
+  border: 2px solid #d0cfce;
+  font-size: 13px;
+  line-height: 23px;
+  margin: 0 20px;
+  padding: 15px 20px;
 }
-input#search-bar:focus {
-  border: 1px solid #008abf;
+.searchform:hover,
+.searchform:active,
+.searchform:focus {
+  border: 2px solid #28a745;
+  color: #000;
   transition: 0.35s ease;
-  color: #008abf;
 }
-input#search-bar:focus::-webkit-input-placeholder {
-  transition: opacity 0.45s ease;
-  opacity: 0;
-}
-input#search-bar:focus::-moz-placeholder {
-  transition: opacity 0.45s ease;
-  opacity: 0;
-}
-input#search-bar:focus:-ms-placeholder {
-  transition: opacity 0.45s ease;
-  opacity: 0;
+.searchform .searchfield {
+  border: 0;
+  outline: none;
+  text-indent: 10px;
+  width: 90%;
 }
 
 .search-icon {
-  position: relative;
+  background: url(https://user-images.githubusercontent.com/1529169/206242179-f6c398f7-32a2-4d63-a0e4-24d3dbcfb18b.png) no-repeat -25px -26px;
+  background-size: 75px 75px;
   float: right;
-  width: 75px;
-  height: 75px;
-  top: -62px;
-  right: -45px;
+  height: 23px;
+  width: 24px;
 }

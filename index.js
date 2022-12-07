@@ -12,11 +12,12 @@ const config = {
 const { getAllMatchsLinks } = require("./src/js/getAllMatchsLinks");
 const { getBody } = require("./src/js/getBody");
 const { getIndex } = require("./src/js/getIndex");
+const { getIndexLoading } = require("./src/js/getIndexLoading");
+const { getIndexSearch } = require("./src/js/getIndexSearch");
 const { getLiveScore } = require("./src/js/getLiveScore");
 const { getMatchCountries } = require("./src/js/getMatchCountries");
 const { getMatchDateAndHour } = require("./src/js/getMatchDateAndHour");
 const { getScoreGrid } = require("./src/js/getScoreGrid");
-const { getIndexSearch } = require("./src/js/getIndexSearch");
 
 /**
  * It gets the values of the query parameters, gets the HTML body of the page, gets the score grid, the
@@ -89,12 +90,25 @@ app.get("/", (req, res) => {
   createIndex(req, res);
 });
 
-app.get("/getInput", (req, res) => {
+/* Creating a route for the search page. */
+app.get("/search", async (req, res) => {
   const link = req.query.link;
   const linkArray = link.split("/");
-  const hostnameProd = config.hostnameProd;
-  const URL = `${hostnameProd}?sport=${linkArray[3]}&tournament=${linkArray[4]}&match=${linkArray[5]}`;
-  res.redirect(URL);
+
+  const sportValue = linkArray[3];
+  const tournamentValue = linkArray[4];
+  const matchValue = linkArray[5];
+  const dev = linkArray[6];
+
+  let hostname;
+  if (dev === "dev") {
+    hostname = config.hostnameDev;
+  } else {
+    hostname = config.hostnameProd;
+  }
+
+  const index = await getIndexLoading(hostname, sportValue, tournamentValue, matchValue);
+  res.send(index);
 });
 
 /* Creating a server that listens on port 3000. */
