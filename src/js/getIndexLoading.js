@@ -21,7 +21,7 @@ const getIndexLoading = async (hostname, sportValue, tournamentValue, matchValue
         </head>
         <body>
           <div class="loader">
-            Les données du site <i>Betclic.fr</i> sont en cours de chargement<span
+            Les données du site Betclic.fr sont en cours de chargement<span
               class="loader__dot"
               >.</span
             ><span class="loader__dot">.</span><span class="loader__dot">.</span>

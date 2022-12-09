@@ -1,6 +1,6 @@
 .menusearch {
   left: 50%;
-  max-width: 490px;
+  max-width: 550px;
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -13,7 +13,8 @@
   font-size: 13px;
   line-height: 23px;
   margin: 0 20px;
-  padding: 15px 20px;
+  padding: 15px 0 15px 20px;
+  position: relative;
 }
 .searchform:hover,
 .searchform:active,
@@ -28,9 +29,14 @@
   text-indent: 10px;
   width: 90%;
 }
+.searchform a {
+  position: absolute;
+  right: 25px;
+}
 
 .search-icon {
   background: url(https://user-images.githubusercontent.com/1529169/206242179-f6c398f7-32a2-4d63-a0e4-24d3dbcfb18b.png) no-repeat -25px -26px;
+  background-color: #fff;
   background-size: 75px 75px;
   float: right;
   height: 23px;

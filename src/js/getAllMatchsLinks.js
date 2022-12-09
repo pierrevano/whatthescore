@@ -38,6 +38,14 @@ const getAllMatchsLinks = async (dev, sportValue, tournamentValue) => {
     const firstMatchs = allMatchsArray.filter((_index, element) => element % 2 === 0);
     const secondMatchs = allMatchsArray.filter((_index, element) => element % 2 === 1);
 
+    const firstMatchsLength = firstMatchs.length;
+    const secondMatchsLength = secondMatchs.length;
+    if (firstMatchsLength > secondMatchsLength) {
+      firstMatchs.pop();
+    } else if (secondMatchsLength > firstMatchsLength) {
+      secondMatchs.pop();
+    }
+
     const allMatchsValues = {
       firstMatchsValues: firstMatchs,
       secondMatchsValues: secondMatchs,

@@ -23,7 +23,7 @@ const getIndexSearch = async () => {
                 class="searchfield"
                 name="link"
                 pattern="https://(www.)?betclic.fr.*"
-                placeholder="Please enter a 𝘉𝘦𝘵𝘤𝘭𝘪𝘤.𝘧𝘳 match link."
+                placeholder="Please enter a Betclic.fr match link."
                 required title="Example: https://www.betclic.fr/football-s1/coupe-du-monde-2022-c1/angleterre-france-m3001627841"
                 type="text"
               />
