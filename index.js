@@ -13,6 +13,7 @@ const { getAllMatchsLinks } = require("./src/js/getAllMatchsLinks");
 const { getBody } = require("./src/js/getBody");
 const { getIndex } = require("./src/js/getIndex");
 const { getIndexLoading } = require("./src/js/getIndexLoading");
+const { getIndexNotSupported } = require("./src/js/getIndexNotSupported");
 const { getIndexSearch } = require("./src/js/getIndexSearch");
 const { getLiveScore } = require("./src/js/getLiveScore");
 const { getMatchCountries } = require("./src/js/getMatchCountries");
@@ -95,19 +96,25 @@ app.get("/search", async (req, res) => {
   const link = req.query.link;
   const linkArray = link.split("/");
 
+  let index;
   const sportValue = linkArray[3];
-  const tournamentValue = linkArray[4];
-  const matchValue = linkArray[5];
-  const dev = linkArray[6];
-
-  let hostname;
-  if (dev === "dev") {
-    hostname = config.hostnameDev;
+  if (!sportValue.startsWith("football")) {
+    index = await getIndexNotSupported();
   } else {
-    hostname = config.hostnameProd;
+    const tournamentValue = linkArray[4];
+    const matchValue = linkArray[5];
+    const dev = linkArray[6];
+
+    let hostname;
+    if (dev === "dev") {
+      hostname = config.hostnameDev;
+    } else {
+      hostname = config.hostnameProd;
+    }
+
+    index = await getIndexLoading(hostname, sportValue, tournamentValue, matchValue);
   }
 
-  const index = await getIndexLoading(hostname, sportValue, tournamentValue, matchValue);
   res.send(index);
 });
 

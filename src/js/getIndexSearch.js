@@ -1,9 +1,18 @@
+const config = {
+  pattern: "https://(www.|m.)?betclic.fr.*",
+  placeholder: "Please enter a Betclic.fr match link.",
+  title: "Example: https://www.betclic.fr/football-s1/coupe-du-monde-2022-c1/angleterre-france-m3001627841",
+};
+
 /**
  * It returns the HTML code of the search page.
  * @returns A string.
  */
 const getIndexSearch = async () => {
   try {
+    const pattern = config.pattern;
+    const placeholder = config.placeholder;
+    const title = config.title;
     const index = `
       <!DOCTYPE html>
       <html lang="en">
@@ -22,9 +31,9 @@ const getIndexSearch = async () => {
                 autofocus
                 class="searchfield"
                 name="link"
-                pattern="https://(www.)?betclic.fr.*"
-                placeholder="Please enter a Betclic.fr match link."
-                required title="Example: https://www.betclic.fr/football-s1/coupe-du-monde-2022-c1/angleterre-france-m3001627841"
+                pattern="${pattern}"
+                placeholder="${placeholder}"
+                required title="${title}"
                 type="text"
               />
               <a href="javascript:void(0);" onclick="document.querySelector('.searchform').submit();">

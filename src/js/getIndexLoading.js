@@ -1,3 +1,7 @@
+const config = {
+  loadingMessage: "Betclic.fr data is currently loading",
+};
+
 /**
  * It returns an HTML page with a loading animation
  * @param hostname - the hostname of the website
@@ -8,6 +12,7 @@
  */
 const getIndexLoading = async (hostname, sportValue, tournamentValue, matchValue) => {
   try {
+    const loadingMessage = config.loadingMessage;
     const index = `
       <!DOCTYPE html>
       <html lang="en">
@@ -21,10 +26,7 @@ const getIndexLoading = async (hostname, sportValue, tournamentValue, matchValue
         </head>
         <body>
           <div class="loader">
-            Les données du site Betclic.fr sont en cours de chargement<span
-              class="loader__dot"
-              >.</span
-            ><span class="loader__dot">.</span><span class="loader__dot">.</span>
+            ${loadingMessage}<span class="loader__dot">.</span><span class="loader__dot">.</span><span class="loader__dot">.</span>
           </div>
         </body>
       </html>
